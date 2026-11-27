@@ -91,8 +91,8 @@ module fadd (
 
   // 並列25bit減算
   logic [25:0] diff_12, diff_21;
-  assign diff_12 = {1'b0, m1, 1'b0} - (d_is_1 ? {2'b00, m2} : {1'b0, m2, 1'b0});
-  assign diff_21 = {1'b0, m2, 1'b0} - (d_is_1 ? {2'b00, m1} : {1'b0, m1, 1'b0});
+  assign diff_12 = {2'b01, f1, 1'b0} - (d_is_1 ? {3'b001, f2} : {2'b01, f2, 1'b0});
+  assign diff_21 = {2'b01, f2, 1'b0} - (d_is_1 ? {3'b001, f1} : {2'b01, f1, 1'b0});
 
   logic        use_21;
   logic        s_close;
@@ -136,7 +136,7 @@ module fadd (
 
   always_ff @(posedge clk) begin
     // 共通
-    use_close_ff     <= eff_sub && (d <= 8'd1) && !diff_close[24];
+    use_close_ff     <= eff_sub && (d <= 8'd1) && !diff_close[24] && (e1 != 8'd0) && (e2 != 8'd0);
     e_L_ff           <= e_L;
 
     // Far Path
