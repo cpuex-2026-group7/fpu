@@ -1,0 +1,5 @@
+# 生成ベクタ・シミュレーション一時出力を除外
+work/
+vectors/data/
+__pycache__/
+*.pyc
