@@ -16,18 +16,21 @@ module fsqrt (
   output logic [31:0] result
 );
 
-  (* rom_style = "block" *) logic [35:0] rom [0:1023];
-
+  (* rom_style = "block", ram_style = "block" *) logic [35:0] rom [0:1023];
   logic [35:0] rom_q_ff;
+
+  always_ff @(posedge clk) begin
+    rom_q_ff <= rom[rs1_val[23:14]];
+  end
+
   logic [13:0] dx_ff;
   logic [7:0]  exp_in_ff;
   logic        issued_ff;
 
   always_ff @(posedge clk) begin
-    rom_q_ff    <= rom[rs1_val[23:14]];
-    dx_ff       <= rs1_val[13:0];
-    exp_in_ff   <= rs1_val[30:23];
-    issued_ff   <= !rst && issued;
+    dx_ff     <= rs1_val[13:0];
+    exp_in_ff <= rs1_val[30:23];
+    issued_ff <= !rst && issued;
   end
 
   // =========================================================
