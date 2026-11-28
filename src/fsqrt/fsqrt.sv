@@ -37,8 +37,8 @@ module fsqrt (
   // 1段目
   // =========================================================
   // 仮数DSP48E1 MAC
-  logic [22:0] b;
-  logic [12:0] a;
+  (* keep = "true" *) logic [22:0] b;
+  (* keep = "true" *) logic [12:0] a;
   assign {b, a} = rom_q_ff;
 
   logic [26:0] prod;
